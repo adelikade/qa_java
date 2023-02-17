@@ -9,23 +9,20 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import java.util.Arrays;
-
 @RunWith(Parameterized.class)
 public class LionParametrizedTest {
 
-    @Parameterized.Parameter(0)
+    @Parameterized.Parameter
     public int numberOfKittens;
-    @Parameterized.Parameter(1)
-    public int expectedLionResult;
     @Mock
     Feline feline;
 
-    @Parameterized.Parameters(name = "{index}: {0}-{1}")
-    public static Iterable<Object[]> data() {
-        return Arrays.asList(new Object[][]{
-                {1, 1}
-        });
+    @Parameterized.Parameters()
+    public static Object[][] getNumberOfKittens() {
+        return new Object[][]{
+                {1},
+                {2}
+        };
     }
 
     @Before
@@ -37,6 +34,6 @@ public class LionParametrizedTest {
     public void getLionKittensTest() throws Exception {
         Lion lion = new Lion("Самка", feline);
         Mockito.when(feline.getKittens()).thenReturn(numberOfKittens);
-        Assert.assertEquals(expectedLionResult, lion.getKittens());
+        Assert.assertEquals(numberOfKittens, lion.getKittens());
     }
 }
